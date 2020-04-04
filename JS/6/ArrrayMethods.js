@@ -4,7 +4,7 @@ import users from "./users.js";
 
 // 1
 
-const getUserNames = users => users.map(user => user.name);
+const getUserNames = (users) => users.map((user) => user.name);
 
 console.log(getUserNames(users));
 // [ 'Moore Hensley', 'Sharlene Bush', 'Ross Vazquez', 'Elma Head', 'Carey Barr',
@@ -13,7 +13,7 @@ console.log(getUserNames(users));
 // 2
 
 const getUsersWithEyeColor = (users, color) =>
-  users.filter(user => user.eyeColor === color);
+  users.filter((user) => user.eyeColor === color);
 
 console.log(getUsersWithEyeColor(users, "blue"));
 // [объект Moore Hensley, объект Sharlene Bush,
@@ -35,14 +35,14 @@ console.log(getUsersWithGender(users, "male"));
 
 // 4
 
-const getInactiveUsers = users => users.filter(user => !user.isActive);
+const getInactiveUsers = (users) => users.filter((user) => !user.isActive);
 console.log(getInactiveUsers(users));
 // [объект Moore Hensley, объект Ross Vazquez, объект Blackburn Dotson]
 
 // 5
 
 const getUserWithEmail = (users, email) => {
-  return users.find(user => user.email === email);
+  return users.find((user) => user.email === email);
 };
 
 console.log(getUserWithEmail(users, "shereeanthony@kog.com")); // {объект пользователя Sheree Anthony}
@@ -51,7 +51,7 @@ console.log(getUserWithEmail(users, "elmahead@omatom.com")); // {объект п
 // 6
 
 const getUsersWithAge = (users, min, max) => {
-  return users.filter(user => user.age > min && user.age < max);
+  return users.filter((user) => user.age > min && user.age < max);
 };
 
 console.log(getUsersWithAge(users, 20, 30));
@@ -62,7 +62,7 @@ console.log(getUsersWithAge(users, 30, 40));
 
 // 7
 
-const calculateTotalBalance = users =>
+const calculateTotalBalance = (users) =>
   users.reduce((acc, user) => (acc += user.balance), 0);
 
 console.log(calculateTotalBalance(users));
@@ -72,7 +72,7 @@ console.log(calculateTotalBalance(users));
 
 const getUsersWithFriend = (users, friendName) => {
   return users.reduce((acc, user) => {
-    if (user.friends.find(friend => friend === friendName)) {
+    if (user.friends.find((friend) => friend === friendName)) {
       acc.push(user.name);
     }
     return acc;
@@ -86,7 +86,26 @@ console.log(getUsersWithFriend(users, "Goldie Gentry"));
 
 // 9
 
-const getNamesSortedByFriendsCount = users => {};
+const getNamesSortedByFriendsCount = (users) => {
+  const result = users;
+
+  return result
+    .sort((a, b) => a.friends.length - b.friends.length)
+    .map((user) => user.name);
+};
 
 console.log(getNamesSortedByFriendsCount(users));
 // [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr', 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
+
+// 10
+
+const getSortedUniqueSkills = (users) => {
+  return users
+    .reduce((acc, user) => (acc = [...acc, ...user.skills]), [])
+    .sort();
+};
+
+console.log(getSortedUniqueSkills(users));
+// [ 'adipisicing', 'amet', 'anim', 'commodo', 'culpa', 'elit', 'ex', 'ipsum', 'irure',
+//'laborum', 'lorem', 'mollit', 'non', 'nostrud', 'nulla', 'proident', 'tempor',
+//'velit', 'veniam' ]
