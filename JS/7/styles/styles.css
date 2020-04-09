@@ -30,3 +30,13 @@
 
 #validation-input.invalid {
     border-color: #f44336;
+}
+
+.sizeControl {
+    width: 700px;
+    height: 160px;
+    background-color: rgb(137, 147, 204);
+    margin: 0 auto;
+    padding: 10px 20px;
+    /* display: flex; */
+}
