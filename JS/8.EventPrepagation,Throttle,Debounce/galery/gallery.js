@@ -54,12 +54,26 @@ function closeModal(e) {
 }
 
 function handleModal(e) {
-  console.log(e.target);
   if (e.key === "Escape") {
     closeModal();
   }
-  console.log(e.target.nextSibling);
-  //   if (e.key === "ArrowRight") {
-  //     modalImg.setAttribute("src", e.target.nextSibling.src);
-  //   }
+  const imgs = Array.from(gallery.querySelectorAll("img")).map(
+    (img) => img.dataset.source
+  );
+
+  let index = imgs.indexOf(modalImg.src);
+
+  if (e.key === "ArrowRight") {
+    if (index < imgs.length - 1) {
+      modalImg.setAttribute("src", imgs[index + 1]);
+      return;
+    }
+  }
+
+  if (e.key === "ArrowLeft") {
+    if (index > 0) {
+      modalImg.setAttribute("src", imgs[index - 1]);
+      return;
+    }
+  }
 }
