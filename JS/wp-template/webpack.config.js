@@ -1,40 +1,39 @@
 const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpackMerge = require("webpack-merge");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
-module.exports = {
-  entry: "./src/index.js",
-  output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-  module: {
-    rules: [
-      { test: /\.js$/, exclude: /node_modules/, use: ["babel-loader"] },
-      {
-        test: /\.css$/,
-        use: [
-          "style-loader",
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
+const loadModeConfig = (env) =>
+  require(`./build-configs/${env.mode}.config`)(env);
+
+module.exports = (env) =>
+  webpackMerge(
+    {
+      context: path.resolve(__dirname, "src"),
+      mode: env.mode,
+      entry: "./index.js",
+      output: {
+        path: path.resolve(__dirname, "dist"),
+        filename: "[name].bundle.js",
+      },
+      module: {
+        rules: [
+          { test: /\.js$/, exclude: /node_modules/, use: ["babel-loader"] },
+          {
+            test: /\.(gif|png|jpe?g|svg)$/i,
+            use: [
+              {
+                loader: "url-loader",
+                options: {
+                  name: "[path]/[name].[ext]",
+                  limit: 5000,
+                },
+              },
+            ],
+          },
         ],
       },
-    ],
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "./src/index.html",
-      inject: true,
-    }),
-    new MiniCssExtractPlugin({ filename: "[name].css" }),
-  ],
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
-    port: 9000,
-  },
-};
+      plugins: [new FriendlyErrorsWebpackPlugin()],
+      devtool: "cheap-eval-source-map",
+    },
+    loadModeConfig(env)
+  );
