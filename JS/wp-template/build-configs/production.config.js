@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const WebpackBar = require("webpackbar");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 
 module.exports = (env) => ({
   devtool: "source-map",
@@ -26,5 +27,6 @@ module.exports = (env) => ({
     }),
     new MiniCssExtractPlugin({ filename: "styles.css" }),
     new WebpackBar(),
+    new OptimizeCssAssetsPlugin(),
   ],
 });

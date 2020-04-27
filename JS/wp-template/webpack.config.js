@@ -1,6 +1,8 @@
 const path = require("path");
 const webpackMerge = require("webpack-merge");
+const WebpackBar = require("webpackbar");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const loadModeConfig = (env) =>
   require(`./build-configs/${env.mode}.config`)(env);
@@ -30,9 +32,18 @@ module.exports = (env) =>
               },
             ],
           },
+          {
+            test: /\.html$/,
+            use: "html-loader",
+          },
+          { test: /\.hbs$/, use: "handlebars-loader" },
         ],
       },
-      plugins: [new FriendlyErrorsWebpackPlugin()],
+      plugins: [
+        new FriendlyErrorsWebpackPlugin(),
+        new CleanWebpackPlugin(),
+        new WebpackBar(),
+      ],
       devtool: "cheap-eval-source-map",
     },
     loadModeConfig(env)
