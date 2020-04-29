@@ -1,0 +1,22 @@
+{
+  "name": "test-prj",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "build": "babel src -d dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.5",
+    "uuid": "^7.0.3"
+  },
+  "dependencies": {
+    "shortid": "^2.2.15"
+  }
+}
